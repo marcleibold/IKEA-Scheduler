@@ -1,0 +1,5 @@
+tradfri_standalone_psk.conf
+.env
+.vscode
+credentials.json
+token.json
