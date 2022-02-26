@@ -197,7 +197,6 @@ def update_events():
     # remove old events
     for _id in upcoming_events.keys():
         if _id not in ids:
-            upcoming_events[_id]["job"].remove()
             del upcoming_events[_id]
 
 
