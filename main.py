@@ -79,46 +79,21 @@ async def light_off():
     await api(cmd)
 
 
-async def light_fade(direction, target):
+async def light_fade(target, delay="5"):
     """fade the light brightness to a target value
 
     Parameters
     ----------
-    direction : {-1, 1}
-        the direction to fade the brightness in (-1: less bright, 1: brighter)
     target : int
-        the target brightness value
+        the target value to dim the light to
+    delay : int, optional
+        the time delay, by default 5
     """
-    direction, target = int(direction), int(target)
+    target, delay = int(target), int(delay)
     api, devices = await init()
     light = devices["lights"][0]
-    if direction == 1:
-        curr_dim = light.light_control.lights[0].dimmer
-        curr_state = light.light_control.lights[0].state
-        if curr_state == False:
-            curr_dim = 0
-        if curr_dim <= target:
-            cmd = [
-                light.light_control.set_dimmer(curr_dim),
-                light.light_control.set_state(1)
-            ]
-            await api(cmd)
-            for i in range(curr_dim, target, 2 * direction):
-                cmd = [light.light_control.set_dimmer(i)]
-                await api(cmd)
-                sleep(0.1)
-    elif direction == -1:
-        curr_dim = light.light_control.lights[0].dimmer
-        curr_state = light.light_control.lights[0].state
-        if curr_state == True:
-            for i in range(curr_dim, target, 2 * direction):
-                cmd = [light.light_control.set_dimmer(i)]
-                await api(cmd)
-                sleep(0.1)
-            if target == 0:
-                cmd = [light.light_control.set_state(False)]
-                await api(cmd)
-
+    cmd = light.light_control.set_dimmer(target, transition_time=delay)
+    await api(cmd)
 
 func_map = {
     "set_blinds": set_blinds,
