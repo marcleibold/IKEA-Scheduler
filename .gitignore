@@ -3,3 +3,4 @@ tradfri_standalone_psk.conf
 .vscode
 credentials.json
 token.json
+__pycache__

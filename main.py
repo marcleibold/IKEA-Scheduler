@@ -89,7 +89,7 @@ async def light_fade(target, delay="5"):
     delay : int, optional
         the time delay, by default 5
     """
-    target, delay = int(target), int(delay)
+    target, delay = int(target), int(delay)*10
     api, devices = await init()
     light = devices["lights"][0]
     cmd = light.light_control.set_dimmer(target, transition_time=delay)
@@ -124,6 +124,7 @@ def execute(actions):
         print(func_string, args)
         func = func_map[func_string]
         loop.run_until_complete(func(*args))
+        sleep(1)
 
 
 def init_gcalendar():
