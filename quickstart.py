@@ -9,7 +9,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
+SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
 def main():
@@ -35,7 +35,7 @@ def main():
             token.write(creds.to_json())
 
     try:
-        service = build('drive', 'v3', credentials=creds)
+        service = build('calendar', 'v3', credentials=creds)
 
         # Call the Drive v3 API
         results = service.files().list(
